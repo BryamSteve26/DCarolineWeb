@@ -12,14 +12,14 @@
 
 body {
     margin: 0;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: var(--crema);
     color: var(--texto);
     text-align: center;
 }
 
 .hero {
-    padding: 50px 20px;
+    padding: 55px 20px;
     background: linear-gradient(180deg, #f0ebd8, #ffffff);
 }
 
@@ -39,6 +39,12 @@ h2 {
     font-size: 30px;
 }
 
+.slogan {
+    font-size: 20px;
+    color: var(--texto);
+    margin-bottom: 25px;
+}
+
 .btn {
     display: inline-block;
     background: var(--rosado);
@@ -48,10 +54,16 @@ h2 {
     text-decoration: none;
     margin-top: 20px;
     font-weight: bold;
+    transition: 0.3s;
 }
 
+    .btn:hover {
+        background: var(--verde);
+        transform: translateY(-2px);
+    }
+
 .section {
-    padding: 40px 20px;
+    padding: 45px 20px;
 }
 
 .grid {
@@ -68,7 +80,13 @@ h2 {
     padding: 18px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     position: relative;
+    transition: 0.3s;
 }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
 
     .card img {
         width: 100%;
@@ -81,12 +99,14 @@ h2 {
     .card h3 {
         color: var(--texto);
         min-height: 48px;
+        font-size: 18px;
     }
 
     .card p {
         font-weight: bold;
         color: var(--rosado);
         font-size: 20px;
+        margin: 8px 0;
     }
 
 .nuevo {
@@ -107,7 +127,7 @@ h2 {
 
 .promo {
     background: var(--verde);
-    padding: 40px 20px;
+    padding: 45px 20px;
     color: white;
 }
 
@@ -118,7 +138,44 @@ h2 {
     .promo p {
         font-size: 26px;
         font-weight: bold;
+        margin: 12px 0;
     }
+
+.beneficios {
+    padding: 45px 20px;
+    background: #ffffff;
+}
+
+.beneficio {
+    display: inline-block;
+    background: var(--crema);
+    padding: 18px 24px;
+    margin: 10px;
+    border-radius: 22px;
+    font-weight: bold;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+    .galeria img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-radius: 22px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+        transition: 0.3s;
+    }
+
+        .galeria img:hover {
+            transform: scale(1.03);
+        }
 
 .especial-grid {
     display: grid;
@@ -133,17 +190,49 @@ h2 {
         padding: 20px;
         border-radius: 20px;
         font-weight: bold;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     }
 
 .info {
     background: white;
-    padding: 40px 20px;
+    padding: 45px 20px;
 }
+
+    .info p {
+        font-size: 18px;
+    }
+
+    .info i {
+        color: var(--rosado);
+        margin-right: 8px;
+    }
+
+.instagram {
+    margin: 18px 0;
+}
+
+    .instagram a {
+        color: var(--rosado);
+        text-decoration: none;
+        font-size: 22px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .instagram a:hover {
+            color: var(--verde);
+        }
+
+    .instagram i {
+        margin-right: 8px;
+        font-size: 26px;
+    }
 
 footer {
     background: var(--rosado);
     color: white;
     padding: 25px;
+    font-weight: bold;
 }
 
 .whatsapp {
@@ -156,12 +245,18 @@ footer {
     height: 58px;
     border-radius: 50%;
     text-decoration: none;
-    font-size: 28px;
+    font-size: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    z-index: 999;
+    transition: 0.3s;
 }
+
+    .whatsapp:hover {
+        transform: scale(1.08);
+    }
 
 @media (max-width: 900px) {
     .grid {
@@ -171,11 +266,23 @@ footer {
     .especial-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 600px) {
     h1 {
         font-size: 32px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .logo {
+        width: 280px;
     }
 
     .grid {
@@ -184,5 +291,13 @@ footer {
 
     .especial-grid {
         grid-template-columns: 1fr;
+    }
+
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .promo p {
+        font-size: 22px;
     }
 }
