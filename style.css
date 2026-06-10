@@ -301,3 +301,71 @@ footer {
         font-size: 22px;
     }
 }
+
+.add-cart {
+    background: var(--verde);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+    .add-cart:hover {
+        background: var(--rosado);
+        transform: translateY(-2px);
+    }
+
+.carrito-section {
+    background: #ffffff;
+}
+
+#carrito-lista {
+    max-width: 700px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.item-carrito {
+    background: var(--crema);
+    padding: 15px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .item-carrito button {
+        background: var(--rosado);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+    }
+
+.form-pedido {
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    gap: 12px;
+}
+
+    .form-pedido input,
+    .form-pedido select,
+    .form-pedido textarea {
+        padding: 14px;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+    }
+
+    .form-pedido textarea {
+        min-height: 90px;
+    }

@@ -40,6 +40,41 @@
 
     </header>
 
+
+    <!-- CARRITO -->
+
+<section class="section carrito-section">
+
+    <h2>🛒 Tu Pedido</h2>
+
+    <div id="carrito-lista"></div>
+
+    <h3>Total: S/<span id="carrito-total">0</span></h3>
+
+    <div class="form-pedido">
+
+        <input type="text" id="cliente" placeholder="Nombre completo">
+
+        <input type="tel" id="celular" placeholder="Celular">
+
+        <select id="modalidad">
+            <option value="">Selecciona modalidad</option>
+            <option value="Recojo en punto de venta">Recojo en punto de venta</option>
+            <option value="Delivery">Delivery</option>
+        </select>
+
+        <input type="text" id="direccion" placeholder="Dirección o referencia">
+
+        <textarea id="observaciones" placeholder="Observaciones"></textarea>
+
+        <button id="enviar-pedido" class="btn">
+            Enviar pedido por WhatsApp
+        </button>
+
+    </div>
+
+</section>
+
     <!-- PRODUCTOS -->
 
     <section class="section">
@@ -56,6 +91,10 @@
 
                 <p>S/15</p>
 
+                <button class="add-cart" data-producto="Cuchareable Torta de Chocolate" data-precio="15">
+                    Agregar al pedido
+                </button>
+
             </div>
 
             <div class="card">
@@ -65,6 +104,10 @@
                 <h3>🥛 Cuchareable Tres Leches Clásico</h3>
 
                 <p>S/15</p>
+
+                <button class="add-cart" data-producto="Cuchareable Tres Leches Clásico" data-precio="15">
+                    Agregar al pedido
+                </button>
 
             </div>
 
@@ -76,6 +119,10 @@
 
                 <p>S/15</p>
 
+                <button class="add-cart" data-producto="Cuchareable Tres Leches Oreo" data-precio="15">
+                    Agregar al pedido
+                </button>
+
             </div>
 
             <div class="card">
@@ -85,6 +132,10 @@
                 <h3>❤️ Cuchareable Red Velvet</h3>
 
                 <p>S/15</p>
+
+                <button class="add-cart" data-producto="Cuchareable Red Velvet" data-precio="15">
+                    Agregar al pedido
+                </button>
 
             </div>
 
@@ -98,6 +149,11 @@
 
                 <p>S/15</p>
 
+                <button class="add-cart" data-producto="Pie de Limón" data-precio="15">
+                    Agregar al pedido
+                </button>
+
+
             </div>
 
             <div class="card nuevo">
@@ -109,6 +165,10 @@
                 <h3>🌈 Dot Cake</h3>
 
                 <p>S/15</p>
+
+                <button class="add-cart" data-producto="Dot Cake" data-precio="15">
+                    Agregar al pedido
+                </button>
 
             </div>
 
@@ -261,6 +321,8 @@
         <i class="fa-brands fa-whatsapp"></i>
 
     </a>
+
+<script src="script.js"></script>
 
 </body>
 
