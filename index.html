@@ -20,31 +20,110 @@
 
 </head>
 
+
+
 <body>
 
-    <!-- HERO -->
+<nav class="navbar">
 
-    <header class="hero">
+    <div class="nav-brand">
+        D´Caroline
+    </div>
 
-        <img src="images/logo.png" class="logo" alt="Logo DCaroline">
+    <div class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#dotcake">Dot Cake</a>
+        <a href="#carta">Carta</a>
+        <a href="#pedido">Pedido</a>
+        <a href="#contacto">Contacto</a>
+    </div>
 
-        <h1>D´Caroline Pastelería Fina</h1>
+</nav>
 
-        <p class="slogan">
-            Endulzamos tus momentos especiales ✨
+ <header class="hero" id="inicio">
+
+    <div class="hero-content">
+
+        <div class="hero-text">
+
+            <img src="images/logo.png" class="logo" alt="Logo DCaroline">
+
+            <span class="badge">Pastelería fina en Trujillo</span>
+
+            <h1>Postres artesanales hechos con amor</h1>
+
+            <p class="slogan">
+                Cuchareables, Dot Cakes, tortas personalizadas y detalles dulces para endulzar tus momentos especiales.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#carta" class="btn">
+                    Ver carta
+                </a>
+
+                <a href="#pedido" class="btn btn-secondary">
+                    Hacer pedido
+                </a>
+
+            </div>
+
+            <div class="hero-info">
+
+                <span>🚚 Delivery disponible</span>
+
+                <span>📍 Recojo en punto de venta</span>
+
+                <span>🕘 9:00 a.m. - 8:00 p.m.</span>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+
+            <img src="images/dotcake1.jpeg" alt="Dot Cake DCaroline">
+
+        </div>
+
+    </div>
+
+</header>
+
+<section class="featured-product" id="dotcake">
+
+    <div class="featured-image">
+
+        <img src="images/dotcake1.jpeg" alt="Dot Cake">
+
+    </div>
+
+    <div class="featured-text">
+
+        <span class="badge">🌈 Nuevo lanzamiento</span>
+
+        <h2>Dot Cake</h2>
+
+        <p>
+            El postre colorido que está conquistando a todos. Perfecto para regalar,
+            compartir o darte un gustito especial.
         </p>
 
-        <a href="https://wa.me/51947980409" class="btn" target="_blank">
-            Pedir por WhatsApp
-        </a>
+        <h3>S/15</h3>
 
-    </header>
+        <button class="add-cart" data-producto="Dot Cake" data-precio="15">
+            Agregar al pedido
+        </button>
+
+    </div>
+
+</section>
 
 
 
     <!-- PRODUCTOS -->
 
-    <section class="section">
+    <section class="section" id="carta">
 
         <h2>🌸 Nuestra Carta</h2>
 
@@ -155,6 +234,40 @@
 
     </section>
 
+    <section class="section como-pedir">
+
+    <h2>¿Cómo hacer tu pedido?</h2>
+
+    <div class="steps-grid">
+
+        <div class="step-card">
+            <span>1</span>
+            <h3>Elige tus postres</h3>
+            <p>Revisa nuestra carta y selecciona tus favoritos.</p>
+        </div>
+
+        <div class="step-card">
+            <span>2</span>
+            <h3>Agrégalos al carrito</h3>
+            <p>Podrás ver el total de tu pedido en todo momento.</p>
+        </div>
+
+        <div class="step-card">
+            <span>3</span>
+            <h3>Completa tus datos</h3>
+            <p>Indica si deseas recojo o delivery.</p>
+        </div>
+
+        <div class="step-card">
+            <span>4</span>
+            <h3>Confirma por WhatsApp</h3>
+            <p>Te contactaremos para coordinar pago y entrega.</p>
+        </div>
+
+    </div>
+
+</section>
+
     <!-- BENEFICIOS -->
 
     <section class="beneficios">
@@ -221,9 +334,64 @@
 
     </section>
 
+    <section class="brand-story">
+
+    <div class="story-content">
+
+        <h2>Nuestra historia</h2>
+
+        <p>
+            D´Caroline Pastelería Fina nace del amor por la pastelería artesanal
+            y del deseo de acompañar los momentos especiales de cada familia.
+        </p>
+
+        <p>
+            Cada postre es elaborado con dedicación, ingredientes seleccionados
+            y mucho cariño, cuidando cada detalle desde la preparación hasta la entrega.
+        </p>
+
+        <strong>
+            Endulzamos tus momentos especiales ✨
+        </strong>
+
+    </div>
+
+</section>
+
+<section class="section testimonios">
+
+    <h2>Lo que dicen nuestros clientes</h2>
+
+    <div class="testimonios-grid">
+
+        <div class="testimonio-card">
+            <p>
+                “El Dot Cake estuvo delicioso y la presentación muy linda.”
+            </p>
+            <strong>Cliente D´Caroline</strong>
+        </div>
+
+        <div class="testimonio-card">
+            <p>
+                “El Red Velvet llegó perfecto, fresco y muy rico.”
+            </p>
+            <strong>Cliente D´Caroline</strong>
+        </div>
+
+        <div class="testimonio-card">
+            <p>
+                “Ideal para regalar o compartir en familia.”
+            </p>
+            <strong>Cliente D´Caroline</strong>
+        </div>
+
+    </div>
+
+</section>
+
     <!-- CONTACTO -->
 
-    <section class="info">
+    <section class="info" id="contacto">
 
         <h2>📱 Pedidos y Contacto</h2>
 
@@ -278,6 +446,8 @@
         </p>
 
     </footer>
+
+    <div id="pedido"></div>
 
 <!-- CARRITO FLOTANTE -->
 
