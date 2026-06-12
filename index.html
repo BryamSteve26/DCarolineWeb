@@ -41,39 +41,6 @@
     </header>
 
 
-    <!-- CARRITO -->
-
-<section class="section carrito-section">
-
-    <h2>🛒 Tu Pedido</h2>
-
-    <div id="carrito-lista"></div>
-
-    <h3>Total: S/<span id="carrito-total">0</span></h3>
-
-    <div class="form-pedido">
-
-        <input type="text" id="cliente" placeholder="Nombre completo">
-
-        <input type="tel" id="celular" placeholder="Celular">
-
-        <select id="modalidad">
-            <option value="">Selecciona modalidad</option>
-            <option value="Recojo en punto de venta">Recojo en punto de venta</option>
-            <option value="Delivery">Delivery</option>
-        </select>
-
-        <input type="text" id="direccion" placeholder="Dirección o referencia">
-
-        <textarea id="observaciones" placeholder="Observaciones"></textarea>
-
-        <button id="enviar-pedido" class="btn">
-            Enviar pedido por WhatsApp
-        </button>
-
-    </div>
-
-</section>
 
     <!-- PRODUCTOS -->
 
@@ -311,6 +278,109 @@
         </p>
 
     </footer>
+
+<!-- CARRITO FLOTANTE -->
+
+<button id="cartToggle" class="cart-float" type="button">
+
+    <span class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+    </span>
+
+    <span class="cart-text">
+        <strong>Mi pedido</strong>
+        <small>
+            <span id="cartCount">0</span> productos · S/<span id="cartFloatTotal">0</span>
+        </small>
+    </span>
+
+</button>
+
+<div id="cartOverlay" class="cart-overlay"></div>
+
+<aside id="cartPanel" class="cart-panel">
+
+    <div class="cart-header">
+
+        <div>
+            <h2>🛒 Tu pedido</h2>
+            <p>Revisa tus productos antes de confirmar.</p>
+        </div>
+
+        <button id="closeCart" class="cart-close" type="button">
+            ×
+        </button>
+
+    </div>
+
+    <div id="cartItems" class="cart-items">
+
+        <p class="empty-cart">
+            Aún no agregaste productos.
+        </p>
+
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="cart-total-row">
+            <span>Total</span>
+            <strong>S/<span id="cartTotal">0</span></strong>
+        </div>
+
+        <button id="checkoutBtn" class="checkout-btn" type="button">
+            Finalizar pedido
+        </button>
+
+        <small>
+            El delivery no está incluido en el precio del producto.
+        </small>
+
+    </div>
+
+</aside>
+
+<!-- MODAL DE CONFIRMACIÓN -->
+
+<div id="checkoutOverlay" class="checkout-overlay"></div>
+
+<div id="checkoutModal" class="checkout-modal">
+
+    <div class="checkout-header">
+
+        <h2>Finalizar pedido</h2>
+
+        <button id="closeCheckout" class="cart-close" type="button">
+            ×
+        </button>
+
+    </div>
+
+    <form id="checkoutForm" class="checkout-form">
+
+        <input type="text" id="checkoutNombre" placeholder="Nombre completo" required>
+
+        <input type="tel" id="checkoutCelular" placeholder="Celular" required>
+
+        <select id="checkoutModalidad" required>
+            <option value="">Selecciona modalidad</option>
+            <option value="Recojo en punto de venta">Recojo en punto de venta</option>
+            <option value="Delivery">Delivery</option>
+        </select>
+
+        <input type="text" id="checkoutDireccion" placeholder="Dirección o referencia">
+
+        <input type="date" id="checkoutFecha">
+
+        <textarea id="checkoutObservaciones" placeholder="Observaciones del pedido"></textarea>
+
+        <button type="submit" class="checkout-btn">
+            Confirmar por WhatsApp
+        </button>
+
+    </form>
+
+</div>
 
     <!-- BOTON FLOTANTE WHATSAPP -->
 
