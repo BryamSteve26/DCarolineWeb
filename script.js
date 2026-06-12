@@ -152,6 +152,35 @@ function cerrarCheckout() {
     checkoutOverlay.classList.remove("active");
 }
 
+function generarNroPedido() {
+    const ahora = new Date();
+
+    const yyyy = ahora.getFullYear();
+    const mm = String(ahora.getMonth() + 1).padStart(2, "0");
+    const dd = String(ahora.getDate()).padStart(2, "0");
+    const hh = String(ahora.getHours()).padStart(2, "0");
+    const mi = String(ahora.getMinutes()).padStart(2, "0");
+    const ss = String(ahora.getSeconds()).padStart(2, "0");
+
+    return `DC-${yyyy}${mm}${dd}${hh}${mi}${ss}`;
+}
+
+async function registrarPedidoGoogleSheets(payload) {
+    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PEGA_AQUI")) {
+        console.warn("No se configuró la URL de Google Apps Script.");
+        return;
+    }
+
+    await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+    });
+}
+
 cartToggle.addEventListener("click", abrirCarrito);
 closeCart.addEventListener("click", cerrarCarrito);
 cartOverlay.addEventListener("click", cerrarCarrito);
@@ -160,7 +189,7 @@ checkoutBtn.addEventListener("click", abrirCheckout);
 closeCheckout.addEventListener("click", cerrarCheckout);
 checkoutOverlay.addEventListener("click", cerrarCheckout);
 
-checkoutForm.addEventListener("submit", (event) => {
+checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const nombre = document.getElementById("checkoutNombre").value.trim();
@@ -184,12 +213,34 @@ checkoutForm.addEventListener("submit", (event) => {
         return sum + item.precio * item.cantidad;
     }, 0);
 
+    const nroPedido = generarNroPedido();
+
+    const payload = {
+        nroPedido: nroPedido,
+        cliente: nombre,
+        celular: celular,
+        modalidad: modalidad,
+        direccion: direccion || "No indicado",
+        fechaSolicitada: fecha || "No indicada",
+        observaciones: observaciones || "Sin observaciones",
+        total: total,
+        items: carrito.map((item) => {
+            return {
+                producto: item.producto,
+                precio: item.precio,
+                cantidad: item.cantidad
+            };
+        })
+    };
+
     const detallePedido = carrito.map((item) => {
         return `- ${item.producto} x ${item.cantidad} = S/${item.precio * item.cantidad}`;
     }).join("\n");
 
     const mensaje = `
 Hola D´Caroline, quiero realizar un pedido:
+
+Nro Pedido: ${nroPedido}
 
 Cliente: ${nombre}
 Celular: ${celular}
@@ -208,7 +259,32 @@ ${observaciones || "Sin observaciones"}
 Nota: Entiendo que el costo de delivery se confirma según distrito.
 `;
 
-    const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    const botonSubmit = checkoutForm.querySelector("button[type='submit']");
+    botonSubmit.disabled = true;
+    botonSubmit.textContent = "Registrando pedido...";
 
-    window.open(urlWhatsApp, "_blank");
+    try {
+        await registrarPedidoGoogleSheets(payload);
+
+        botonSubmit.textContent = "Abriendo WhatsApp...";
+
+        const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(urlWhatsApp, "_blank");
+
+        carrito = [];
+        renderizarCarrito();
+        checkoutForm.reset();
+        cerrarCheckout();
+        cerrarCarrito();
+
+    } catch (error) {
+        console.error(error);
+
+        alert("No se pudo registrar el pedido. Inténtalo nuevamente o escríbenos por WhatsApp.");
+
+    } finally {
+        botonSubmit.disabled = false;
+        botonSubmit.textContent = "Confirmar por WhatsApp";
+    }
 });
