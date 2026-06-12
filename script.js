@@ -1,5 +1,7 @@
 const WHATSAPP_NUMBER = "51947980409";
 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzsMP37xtj15I6HuOVZPy2xFk4YEccR78uS-axWH5tlwJsJKWaPQZjnxl93Sh4vk5Sh6g/exec";
+
 let carrito = [];
 
 const botonesAgregar = document.querySelectorAll(".add-cart");
