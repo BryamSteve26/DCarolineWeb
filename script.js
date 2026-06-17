@@ -1,6 +1,6 @@
 const WHATSAPP_NUMBER = "51947980409";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzsMP37xtj15I6HuOVZPy2xFk4YEccR78uS-axWH5tlwJsJKWaPQZjnxl93Sh4vk5Sh6g/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv1od2F4zTDzdIPFH68wM9CjQSSdlWYNNoqyBmJjp8sML5MgTRNAgoHGwV6q-zeDDFvQ/exec";
 
 let carrito = [];
 
@@ -21,6 +21,8 @@ const checkoutOverlay = document.getElementById("checkoutOverlay");
 const checkoutModal = document.getElementById("checkoutModal");
 const closeCheckout = document.getElementById("closeCheckout");
 const checkoutForm = document.getElementById("checkoutForm");
+const checkoutModalidad = document.getElementById("checkoutModalidad");
+const direccionGroup = document.getElementById("direccionGroup");
 
 botonesAgregar.forEach((boton) => {
     boton.addEventListener("click", () => {
@@ -143,6 +145,8 @@ function abrirCheckout() {
         return;
     }
 
+    renderizarResumenCheckout();
+
     checkoutModal.classList.add("active");
     checkoutOverlay.classList.add("active");
 }
@@ -150,6 +154,36 @@ function abrirCheckout() {
 function cerrarCheckout() {
     checkoutModal.classList.remove("active");
     checkoutOverlay.classList.remove("active");
+}
+
+function renderizarResumenCheckout() {
+    const summaryItems = document.getElementById("checkoutSummaryItems");
+    const summaryTotal = document.getElementById("checkoutSummaryTotal");
+
+    if (!summaryItems || !summaryTotal) {
+        return;
+    }
+
+    summaryItems.innerHTML = "";
+
+    let total = 0;
+
+    carrito.forEach((item) => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+
+        const div = document.createElement("div");
+        div.classList.add("checkout-summary-item");
+
+        div.innerHTML = `
+            <span>${item.producto} x ${item.cantidad}</span>
+            <strong>S/${subtotal}</strong>
+        `;
+
+        summaryItems.appendChild(div);
+    });
+
+    summaryTotal.textContent = total;
 }
 
 function generarNroPedido() {
@@ -189,6 +223,24 @@ checkoutBtn.addEventListener("click", abrirCheckout);
 closeCheckout.addEventListener("click", cerrarCheckout);
 checkoutOverlay.addEventListener("click", cerrarCheckout);
 
+if (checkoutModalidad && direccionGroup) {
+    direccionGroup.classList.add("hidden");
+
+    checkoutModalidad.addEventListener("change", () => {
+        const direccionInput = document.getElementById("checkoutDireccion");
+
+        if (checkoutModalidad.value === "Delivery") {
+            direccionGroup.classList.remove("hidden");
+        } else {
+            direccionGroup.classList.add("hidden");
+
+            if (direccionInput) {
+                direccionInput.value = "";
+            }
+        }
+    });
+}
+
 checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -198,7 +250,8 @@ checkoutForm.addEventListener("submit", async (event) => {
     const direccion = document.getElementById("checkoutDireccion").value.trim();
     const fecha = document.getElementById("checkoutFecha").value;
     const observaciones = document.getElementById("checkoutObservaciones").value.trim();
-
+    const medioPago = document.getElementById("checkoutPago").value;
+ 
     if (!nombre || !celular || !modalidad) {
         alert("Completa nombre, celular y modalidad.");
         return;
@@ -222,6 +275,7 @@ checkoutForm.addEventListener("submit", async (event) => {
         modalidad: modalidad,
         direccion: direccion || "No indicado",
         fechaSolicitada: fecha || "No indicada",
+        medioPago: medioPago || "No indicado",
         observaciones: observaciones || "Sin observaciones",
         total: total,
         items: carrito.map((item) => {
@@ -247,6 +301,7 @@ Celular: ${celular}
 Modalidad: ${modalidad}
 Dirección/Referencia: ${direccion || "No indicado"}
 Fecha solicitada: ${fecha || "No indicada"}
+Medio de pago preferido: ${medioPago || "No indicado"}
 
 Pedido:
 ${detallePedido}
@@ -285,6 +340,6 @@ Nota: Entiendo que el costo de delivery se confirma según distrito.
 
     } finally {
         botonSubmit.disabled = false;
-        botonSubmit.textContent = "Confirmar por WhatsApp";
+        botonSubmit.textContent = "Confirmar pedido por WhatsApp";
     }
 });

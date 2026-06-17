@@ -384,7 +384,7 @@
         <div class="promo-card">
 
             <span class="promo-label">Combo dulce</span>
-
+            x
             <h3>3 postres</h3>
 
             <p class="promo-price">S/42</p>
@@ -779,15 +779,21 @@
 
 </aside>
 
-<!-- MODAL DE CONFIRMACIÓN -->
+<!-- MODAL DE CONFIRMACIÓN PREMIUM -->
 
 <div id="checkoutOverlay" class="checkout-overlay"></div>
 
-<div id="checkoutModal" class="checkout-modal">
+<div id="checkoutModal" class="checkout-modal checkout-premium">
 
-    <div class="checkout-header">
+    <div class="checkout-header premium-header">
 
-        <h2>Finalizar pedido</h2>
+        <div>
+            <span class="checkout-badge">Último paso</span>
+            <h2>Confirma tu pedido</h2>
+            <p>
+                Revisa el resumen y completa tus datos para coordinar por WhatsApp.
+            </p>
+        </div>
 
         <button id="closeCheckout" class="cart-close" type="button">
             ×
@@ -795,29 +801,88 @@
 
     </div>
 
-    <form id="checkoutForm" class="checkout-form">
+    <div class="checkout-body">
 
-        <input type="text" id="checkoutNombre" placeholder="Nombre completo" required>
+        <div class="checkout-summary-box">
 
-        <input type="tel" id="checkoutCelular" placeholder="Celular" required>
+            <h3>🛒 Resumen de tu pedido</h3>
 
-        <select id="checkoutModalidad" required>
-            <option value="">Selecciona modalidad</option>
-            <option value="Recojo en punto de venta">Recojo en punto de venta</option>
-            <option value="Delivery">Delivery</option>
-        </select>
+            <div id="checkoutSummaryItems" class="checkout-summary-items">
+                <!-- Aquí se cargan los productos -->
+            </div>
 
-        <input type="text" id="checkoutDireccion" placeholder="Dirección o referencia">
+            <div class="checkout-summary-total">
+                <span>Total productos</span>
+                <strong>S/<span id="checkoutSummaryTotal">0</span></strong>
+            </div>
 
-        <input type="date" id="checkoutFecha">
+            <small>
+                El costo de delivery se confirma según distrito.
+            </small>
 
-        <textarea id="checkoutObservaciones" placeholder="Observaciones del pedido"></textarea>
+        </div>
 
-        <button type="submit" class="checkout-btn">
-            Confirmar por WhatsApp
-        </button>
+        <form id="checkoutForm" class="checkout-form premium-form">
 
-    </form>
+            <div class="form-group">
+                <label for="checkoutNombre">Nombre completo</label>
+                <input type="text" id="checkoutNombre" placeholder="Ej. María Fernández" required>
+            </div>
+
+            <div class="form-group">
+                <label for="checkoutCelular">Celular</label>
+                <input type="tel" id="checkoutCelular" placeholder="Ej. 987654321" required>
+            </div>
+
+            <div class="form-group">
+                <label for="checkoutModalidad">Modalidad de entrega</label>
+                <select id="checkoutModalidad" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Recojo en punto de venta">Recojo en punto de venta</option>
+                    <option value="Delivery">Delivery</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="direccionGroup">
+                <label for="checkoutDireccion">Dirección o referencia</label>
+                <input type="text" id="checkoutDireccion" placeholder="Ej. Urb. Primavera, referencia...">
+            </div>
+
+            <div class="form-group">
+                <label for="checkoutFecha">Fecha solicitada</label>
+                <input type="date" id="checkoutFecha">
+            </div>
+
+            <div class="form-group">
+                <label for="checkoutPago">Medio de pago preferido</label>
+                <select id="checkoutPago">
+                    <option value="">Selecciona una opción</option>
+                    <option value="Yape">Yape</option>
+                    <option value="Plin">Plin</option>
+                    <option value="Transferencia BCP">Transferencia BCP</option>
+                    <option value="Transferencia BBVA">Transferencia BBVA</option>
+                    <option value="Efectivo">Efectivo</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="checkoutObservaciones">Observaciones</label>
+                <textarea id="checkoutObservaciones" placeholder="Ej. Sin mucha crema, entregar después de las 4 p.m., mensaje para regalo..."></textarea>
+            </div>
+
+            <div class="checkout-trust">
+                <span>💕 Pedido artesanal</span>
+                <span>📲 Confirmación por WhatsApp</span>
+                <span>🚚 Delivery disponible</span>
+            </div>
+
+            <button type="submit" class="checkout-btn premium-submit">
+                Confirmar pedido por WhatsApp
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 
