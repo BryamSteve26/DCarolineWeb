@@ -1,6 +1,6 @@
 const WHATSAPP_NUMBER = "51947980409";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv1od2F4zTDzdIPFH68wM9CjQSSdlWYNNoqyBmJjp8sML5MgTRNAgoHGwV6q-zeDDFvQ/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7APNOAWHJuUxZJMhE5kuAavykBQu0cq9R97Q38si34d8aspB_5eh6hlFstuPtA8XWlA/exec";
 
 let carrito = [];
 
