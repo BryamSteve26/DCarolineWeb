@@ -720,6 +720,8 @@
 
 <!-- CARRITO FLOTANTE -->
 
+<!-- CARRITO FLOTANTE PREMIUM -->
+
 <button id="cartToggle" class="cart-float" type="button">
 
     <span class="cart-icon">
@@ -737,13 +739,14 @@
 
 <div id="cartOverlay" class="cart-overlay"></div>
 
-<aside id="cartPanel" class="cart-panel">
+<aside id="cartPanel" class="cart-panel cart-panel-premium">
 
-    <div class="cart-header">
+    <div class="cart-header cart-header-premium">
 
         <div>
-            <h2>🛒 Tu pedido</h2>
-            <p>Revisa tus productos antes de confirmar.</p>
+            <span class="cart-mini-badge">Pedido en curso</span>
+            <h2>Tu pedido está casi listo 💕</h2>
+            <p>Revisa tus postres antes de confirmar.</p>
         </div>
 
         <button id="closeCart" class="cart-close" type="button">
@@ -752,15 +755,43 @@
 
     </div>
 
-    <div id="cartItems" class="cart-items">
+    <div class="cart-progress-box">
 
-        <p class="empty-cart">
-            Aún no agregaste productos.
-        </p>
+        <div class="cart-progress-text">
+            <span id="cartProgressText">
+                Agrega tus postres favoritos.
+            </span>
+        </div>
+
+        <div class="cart-progress-bar">
+            <span id="cartProgressBar"></span>
+        </div>
 
     </div>
 
-    <div class="cart-footer">
+    <div id="cartItems" class="cart-items premium-cart-items">
+
+        <div class="empty-cart premium-empty-cart">
+            <div class="empty-icon">🍰</div>
+            <h3>Tu carrito está vacío</h3>
+            <p>Agrega tus postres favoritos para empezar tu pedido.</p>
+            <a href="#carta" class="empty-cart-btn">
+                Ver carta
+            </a>
+        </div>
+
+    </div>
+
+    <div id="cartPromoMessage" class="cart-promo-message">
+        Agrega productos y aprovecha nuestras promociones.
+    </div>
+
+    <div class="cart-footer premium-cart-footer">
+
+        <div id="cartSavingRow" class="cart-saving-row hidden">
+            <span>Ahorro por promoción</span>
+            <strong>-S/<span id="cartSavingAmount">0</span></strong>
+        </div>
 
         <div class="cart-total-row">
             <span>Total</span>
@@ -771,8 +802,14 @@
             Finalizar pedido
         </button>
 
+        <button id="continueShoppingBtn" class="continue-shopping-btn" type="button">
+            Seguir viendo la carta
+        </button>
+
         <small>
-            El delivery no está incluido en el precio del producto.
+            Pedido artesanal preparado con amor por D´Caroline ✨
+            <br>
+            El delivery se confirma según distrito.
         </small>
 
     </div>

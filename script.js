@@ -16,11 +16,19 @@ const cartCount = document.getElementById("cartCount");
 const cartFloatTotal = document.getElementById("cartFloatTotal");
 const cartTotal = document.getElementById("cartTotal");
 
+const cartPromoMessage = document.getElementById("cartPromoMessage");
+const cartProgressText = document.getElementById("cartProgressText");
+const cartProgressBar = document.getElementById("cartProgressBar");
+const cartSavingRow = document.getElementById("cartSavingRow");
+const cartSavingAmount = document.getElementById("cartSavingAmount");
+const continueShoppingBtn = document.getElementById("continueShoppingBtn");
+
 const checkoutBtn = document.getElementById("checkoutBtn");
 const checkoutOverlay = document.getElementById("checkoutOverlay");
 const checkoutModal = document.getElementById("checkoutModal");
 const closeCheckout = document.getElementById("closeCheckout");
 const checkoutForm = document.getElementById("checkoutForm");
+
 const checkoutModalidad = document.getElementById("checkoutModalidad");
 const direccionGroup = document.getElementById("direccionGroup");
 
@@ -59,25 +67,74 @@ function agregarProducto(producto, precio) {
     renderizarCarrito();
 }
 
+function calcularResumenPedido() {
+    const cantidadTotal = carrito.reduce((sum, item) => {
+        return sum + item.cantidad;
+    }, 0);
+
+    const subtotalRegular = carrito.reduce((sum, item) => {
+        return sum + item.precio * item.cantidad;
+    }, 0);
+
+    const todosPrecio15 = carrito.every((item) => item.precio === 15);
+
+    if (!todosPrecio15 || cantidadTotal === 0) {
+        return {
+            cantidadTotal,
+            subtotalRegular,
+            totalFinal: subtotalRegular,
+            ahorro: 0
+        };
+    }
+
+    const preciosCombo = [
+        { cantidad: 1, precio: 15 },
+        { cantidad: 3, precio: 42 },
+        { cantidad: 4, precio: 55 }
+    ];
+
+    const dp = Array(cantidadTotal + 1).fill(Infinity);
+    dp[0] = 0;
+
+    for (let i = 1; i <= cantidadTotal; i++) {
+        preciosCombo.forEach((combo) => {
+            if (i >= combo.cantidad) {
+                dp[i] = Math.min(dp[i], dp[i - combo.cantidad] + combo.precio);
+            }
+        });
+    }
+
+    const totalFinal = dp[cantidadTotal];
+    const ahorro = subtotalRegular - totalFinal;
+
+    return {
+        cantidadTotal,
+        subtotalRegular,
+        totalFinal,
+        ahorro
+    };
+}
+
 function renderizarCarrito() {
     cartItems.innerHTML = "";
 
+    const resumen = calcularResumenPedido();
+
     if (carrito.length === 0) {
         cartItems.innerHTML = `
-            <p class="empty-cart">
-                Aún no agregaste productos.
-            </p>
+            <div class="empty-cart premium-empty-cart">
+                <div class="empty-icon">🍰</div>
+                <h3>Tu carrito está vacío</h3>
+                <p>Agrega tus postres favoritos para empezar tu pedido.</p>
+                <a href="#carta" class="empty-cart-btn" onclick="cerrarCarrito()">
+                    Ver carta
+                </a>
+            </div>
         `;
     }
 
-    let total = 0;
-    let cantidadTotal = 0;
-
     carrito.forEach((item, index) => {
         const subtotal = item.precio * item.cantidad;
-
-        total += subtotal;
-        cantidadTotal += item.cantidad;
 
         const div = document.createElement("div");
         div.classList.add("cart-item");
@@ -86,7 +143,12 @@ function renderizarCarrito() {
             <div class="cart-item-top">
                 <div>
                     <h4>${item.producto}</h4>
-                    <p>S/${subtotal}</p>
+                    <div class="cart-item-price">
+                        S/${item.precio} x ${item.cantidad}
+                    </div>
+                    <div class="cart-item-subtotal">
+                        Subtotal S/${subtotal}
+                    </div>
                 </div>
 
                 <button class="remove-item" onclick="eliminarProducto(${index})">
@@ -94,19 +156,107 @@ function renderizarCarrito() {
                 </button>
             </div>
 
-            <div class="qty-controls">
-                <button onclick="disminuirCantidad(${index})">-</button>
-                <span>${item.cantidad}</span>
-                <button onclick="aumentarCantidad(${index})">+</button>
+            <div class="cart-item-bottom">
+                <div class="qty-controls">
+                    <button onclick="disminuirCantidad(${index})">-</button>
+                    <span>${item.cantidad}</span>
+                    <button onclick="aumentarCantidad(${index})">+</button>
+                </div>
             </div>
         `;
 
         cartItems.appendChild(div);
     });
 
-    cartCount.textContent = cantidadTotal;
-    cartFloatTotal.textContent = total;
-    cartTotal.textContent = total;
+    cartCount.textContent = resumen.cantidadTotal;
+    cartFloatTotal.textContent = resumen.totalFinal;
+    cartTotal.textContent = resumen.totalFinal;
+
+    if (resumen.ahorro > 0) {
+        cartSavingRow.classList.remove("hidden");
+        cartSavingAmount.textContent = resumen.ahorro;
+    } else {
+        cartSavingRow.classList.add("hidden");
+        cartSavingAmount.textContent = "0";
+    }
+
+    actualizarMensajePromo(resumen);
+    actualizarBarraProgreso(resumen);
+}
+
+function actualizarMensajePromo(resumen) {
+    if (!cartPromoMessage) {
+        return;
+    }
+
+    cartPromoMessage.classList.remove("success", "highlight");
+
+    if (resumen.cantidadTotal === 0) {
+        cartPromoMessage.textContent = "Agrega productos y aprovecha nuestras promociones.";
+        return;
+    }
+
+    if (resumen.cantidadTotal === 1) {
+        cartPromoMessage.textContent = "Agrega 2 postres más y activa la promo de 3 por S/42 🎉";
+        cartPromoMessage.classList.add("highlight");
+        return;
+    }
+
+    if (resumen.cantidadTotal === 2) {
+        cartPromoMessage.textContent = "Agrega 1 postre más y activa la promo de 3 por S/42 💕";
+        cartPromoMessage.classList.add("highlight");
+        return;
+    }
+
+    if (resumen.cantidadTotal === 3) {
+        cartPromoMessage.textContent = "¡Promo aplicada! 3 postres por S/42 🎉";
+        cartPromoMessage.classList.add("success");
+        return;
+    }
+
+    if (resumen.cantidadTotal === 4) {
+        cartPromoMessage.textContent = "¡Promo familiar aplicada! 4 postres por S/55 🎁";
+        cartPromoMessage.classList.add("success");
+        return;
+    }
+
+    cartPromoMessage.textContent = `Promo aplicada. Estás ahorrando S/${resumen.ahorro} en tu pedido 💕`;
+    cartPromoMessage.classList.add("success");
+}
+
+function actualizarBarraProgreso(resumen) {
+    if (!cartProgressText || !cartProgressBar) {
+        return;
+    }
+
+    const cantidad = resumen.cantidadTotal;
+
+    if (cantidad === 0) {
+        cartProgressText.textContent = "Agrega tus postres favoritos.";
+        cartProgressBar.style.width = "0%";
+        return;
+    }
+
+    if (cantidad === 1) {
+        cartProgressText.textContent = "Vas bien. Agrega 2 más para activar la promo.";
+        cartProgressBar.style.width = "33%";
+        return;
+    }
+
+    if (cantidad === 2) {
+        cartProgressText.textContent = "Te falta 1 postre para la promo de 3 por S/42.";
+        cartProgressBar.style.width = "66%";
+        return;
+    }
+
+    if (cantidad === 3) {
+        cartProgressText.textContent = "Promo de 3 por S/42 activada.";
+        cartProgressBar.style.width = "80%";
+        return;
+    }
+
+    cartProgressText.textContent = "Promo familiar activada. Tu pedido está listo para confirmar.";
+    cartProgressBar.style.width = "100%";
 }
 
 function aumentarCantidad(index) {
@@ -164,13 +314,12 @@ function renderizarResumenCheckout() {
         return;
     }
 
-    summaryItems.innerHTML = "";
+    const resumen = calcularResumenPedido();
 
-    let total = 0;
+    summaryItems.innerHTML = "";
 
     carrito.forEach((item) => {
         const subtotal = item.precio * item.cantidad;
-        total += subtotal;
 
         const div = document.createElement("div");
         div.classList.add("checkout-summary-item");
@@ -183,7 +332,19 @@ function renderizarResumenCheckout() {
         summaryItems.appendChild(div);
     });
 
-    summaryTotal.textContent = total;
+    if (resumen.ahorro > 0) {
+        const descuento = document.createElement("div");
+        descuento.classList.add("checkout-summary-item", "checkout-discount-row");
+
+        descuento.innerHTML = `
+            <span>Descuento por promoción</span>
+            <strong>-S/${resumen.ahorro}</strong>
+        `;
+
+        summaryItems.appendChild(descuento);
+    }
+
+    summaryTotal.textContent = resumen.totalFinal;
 }
 
 function generarNroPedido() {
@@ -223,6 +384,20 @@ checkoutBtn.addEventListener("click", abrirCheckout);
 closeCheckout.addEventListener("click", cerrarCheckout);
 checkoutOverlay.addEventListener("click", cerrarCheckout);
 
+if (continueShoppingBtn) {
+    continueShoppingBtn.addEventListener("click", () => {
+        cerrarCarrito();
+
+        const carta = document.getElementById("carta");
+
+        if (carta) {
+            carta.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    });
+}
+
 if (checkoutModalidad && direccionGroup) {
     direccionGroup.classList.add("hidden");
 
@@ -249,9 +424,9 @@ checkoutForm.addEventListener("submit", async (event) => {
     const modalidad = document.getElementById("checkoutModalidad").value;
     const direccion = document.getElementById("checkoutDireccion").value.trim();
     const fecha = document.getElementById("checkoutFecha").value;
-    const observaciones = document.getElementById("checkoutObservaciones").value.trim();
     const medioPago = document.getElementById("checkoutPago").value;
- 
+    const observaciones = document.getElementById("checkoutObservaciones").value.trim();
+
     if (!nombre || !celular || !modalidad) {
         alert("Completa nombre, celular y modalidad.");
         return;
@@ -262,10 +437,8 @@ checkoutForm.addEventListener("submit", async (event) => {
         return;
     }
 
-    const total = carrito.reduce((sum, item) => {
-        return sum + item.precio * item.cantidad;
-    }, 0);
-
+    const resumen = calcularResumenPedido();
+    const total = resumen.totalFinal;
     const nroPedido = generarNroPedido();
 
     const payload = {
@@ -276,8 +449,10 @@ checkoutForm.addEventListener("submit", async (event) => {
         direccion: direccion || "No indicado",
         fechaSolicitada: fecha || "No indicada",
         medioPago: medioPago || "No indicado",
-        observaciones: observaciones || "Sin observaciones",
+        subtotalRegular: resumen.subtotalRegular,
+        ahorroPromo: resumen.ahorro,
         total: total,
+        observaciones: observaciones || "Sin observaciones",
         items: carrito.map((item) => {
             return {
                 producto: item.producto,
@@ -290,6 +465,10 @@ checkoutForm.addEventListener("submit", async (event) => {
     const detallePedido = carrito.map((item) => {
         return `- ${item.producto} x ${item.cantidad} = S/${item.precio * item.cantidad}`;
     }).join("\n");
+
+    const lineaPromo = resumen.ahorro > 0
+        ? `\nDescuento por promoción: -S/${resumen.ahorro}`
+        : "";
 
     const mensaje = `
 Hola D´Caroline, quiero realizar un pedido:
@@ -305,6 +484,7 @@ Medio de pago preferido: ${medioPago || "No indicado"}
 
 Pedido:
 ${detallePedido}
+${lineaPromo}
 
 Total: S/${total}
 
@@ -343,3 +523,5 @@ Nota: Entiendo que el costo de delivery se confirma según distrito.
         botonSubmit.textContent = "Confirmar pedido por WhatsApp";
     }
 });
+
+renderizarCarrito();
