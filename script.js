@@ -31,6 +31,8 @@ const checkoutForm = document.getElementById("checkoutForm");
 
 const checkoutModalidad = document.getElementById("checkoutModalidad");
 const direccionGroup = document.getElementById("direccionGroup");
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const navLinks = document.getElementById("navLinks");
 
 botonesAgregar.forEach((boton) => {
     boton.addEventListener("click", () => {
@@ -282,11 +284,16 @@ function eliminarProducto(index) {
 function abrirCarrito() {
     cartPanel.classList.add("active");
     cartOverlay.classList.add("active");
+    document.body.classList.add("no-scroll");
 }
 
 function cerrarCarrito() {
     cartPanel.classList.remove("active");
     cartOverlay.classList.remove("active");
+
+    if (!checkoutModal.classList.contains("active")) {
+        document.body.classList.remove("no-scroll");
+    }
 }
 
 function abrirCheckout() {
@@ -299,11 +306,16 @@ function abrirCheckout() {
 
     checkoutModal.classList.add("active");
     checkoutOverlay.classList.add("active");
+    document.body.classList.add("no-scroll");
 }
 
 function cerrarCheckout() {
     checkoutModal.classList.remove("active");
     checkoutOverlay.classList.remove("active");
+
+    if (!cartPanel.classList.contains("active")) {
+        document.body.classList.remove("no-scroll");
+    }
 }
 
 function renderizarResumenCheckout() {
@@ -383,6 +395,18 @@ cartOverlay.addEventListener("click", cerrarCarrito);
 checkoutBtn.addEventListener("click", abrirCheckout);
 closeCheckout.addEventListener("click", cerrarCheckout);
 checkoutOverlay.addEventListener("click", cerrarCheckout);
+
+if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+        });
+    });
+}
 
 if (continueShoppingBtn) {
     continueShoppingBtn.addEventListener("click", () => {

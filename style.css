@@ -1868,3 +1868,356 @@ html {
         font-size: 22px;
     }
 }
+
+/* ========================= */
+/* OPTIMIZACIÓN MÓVIL */
+/* ========================= */
+
+.mobile-menu-btn {
+    display: none;
+    background: var(--rosado);
+    color: white;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Mejora general de botones en móvil */
+button,
+.btn,
+.promo-btn,
+.add-cart,
+.checkout-btn,
+.continue-shopping-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Evita que las imágenes se deformen */
+img {
+    max-width: 100%;
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 12px 18px;
+        justify-content: space-between;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 16px;
+        right: 16px;
+        background: white;
+        border-radius: 24px;
+        padding: 18px;
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.14);
+        z-index: 950;
+    }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links a {
+            padding: 12px 14px;
+            border-radius: 16px;
+            font-size: 16px;
+        }
+
+            .nav-links a:hover {
+                background: var(--crema);
+            }
+
+    .hero-content {
+        gap: 28px;
+    }
+
+    .hero-image img {
+        max-height: 420px;
+        object-fit: cover;
+    }
+
+    .order-timeline {
+        gap: 18px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    .navbar {
+        position: sticky;
+        top: 0;
+        padding: 10px 16px;
+    }
+
+    .nav-brand {
+        font-size: 20px;
+    }
+
+    .hero {
+        padding: 38px 18px 45px;
+    }
+
+    .hero-text h1 {
+        font-size: 34px;
+        line-height: 1.15;
+    }
+
+    .slogan {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+        .hero-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+    .hero-info {
+        flex-direction: column;
+    }
+
+        .hero-info span {
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+    .featured-product {
+        border-radius: 28px;
+    }
+
+    .featured-image img {
+        max-height: 330px;
+        object-fit: cover;
+    }
+
+    .section {
+        padding: 48px 16px;
+    }
+
+    .section-title h2,
+    .order-header h2 {
+        font-size: 29px;
+        line-height: 1.2;
+    }
+
+    .categoria-header {
+        padding: 20px;
+    }
+
+    .product-card {
+        padding: 14px;
+        border-radius: 26px;
+    }
+
+    .product-content h3 {
+        font-size: 19px;
+    }
+
+    .product-description {
+        font-size: 14px !important;
+    }
+
+    .price-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .price {
+        text-align: center;
+    }
+
+    .price-row .add-cart {
+        width: 100%;
+    }
+
+    .promo-premium {
+        padding: 48px 16px;
+    }
+
+    .promo-card {
+        padding: 28px 22px;
+    }
+
+        .promo-card h3 {
+            font-size: 27px;
+        }
+
+    .order-premium {
+        padding: 48px 16px;
+    }
+
+    .order-step {
+        border-radius: 26px;
+    }
+
+    /* Carrito flotante móvil */
+    .cart-float {
+        left: 14px;
+        right: 14px;
+        bottom: 82px;
+        width: auto;
+        justify-content: center;
+        padding: 13px 16px;
+        border-radius: 24px;
+    }
+
+    .cart-icon {
+        font-size: 22px;
+    }
+
+    .cart-text strong {
+        font-size: 15px;
+    }
+
+    .cart-text small {
+        font-size: 12px;
+    }
+
+    /* Panel carrito móvil */
+    .cart-panel {
+        width: 100%;
+        max-width: 100%;
+        right: -100%;
+        border-radius: 24px 24px 0 0;
+    }
+
+        .cart-panel.active {
+            right: 0;
+        }
+
+    .cart-header {
+        padding: 20px;
+    }
+
+    .cart-header-premium h2 {
+        font-size: 21px;
+    }
+
+    .cart-progress-box {
+        padding: 16px 18px;
+    }
+
+    .cart-items {
+        padding: 16px;
+    }
+
+    .cart-item {
+        padding: 14px;
+    }
+
+    .premium-cart-footer {
+        padding: 18px;
+    }
+
+    .cart-total-row {
+        font-size: 19px;
+    }
+
+        .cart-total-row strong {
+            font-size: 24px;
+        }
+
+    .checkout-btn,
+    .continue-shopping-btn {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    /* Checkout móvil */
+    .checkout-modal {
+        width: 100%;
+        max-width: 100%;
+        height: 92vh;
+        max-height: 92vh;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+        border-radius: 28px 28px 0 0;
+    }
+
+        .checkout-modal.active {
+            transform: translateY(0);
+        }
+
+    .checkout-premium {
+        overflow-y: auto;
+    }
+
+    .premium-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        border-radius: 28px 28px 0 0;
+    }
+
+        .premium-header h2 {
+            font-size: 24px;
+        }
+
+        .premium-header p {
+            font-size: 14px;
+        }
+
+    .checkout-body {
+        padding: 18px;
+    }
+
+    .checkout-summary-box {
+        padding: 18px;
+    }
+
+    .premium-form input,
+    .premium-form select,
+    .premium-form textarea {
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .checkout-trust span {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* WhatsApp flotante */
+    .whatsapp {
+        bottom: 18px;
+        right: 18px;
+        width: 54px;
+        height: 54px;
+        font-size: 28px;
+    }
+
+    footer {
+        padding-bottom: 115px;
+    }
+}
